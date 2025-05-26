@@ -32,9 +32,10 @@ namespace HrmApp.Core.Implementations
             throw new NotImplementedException();
         }
 
-        public Task CreateAsync(EmployeeDto employeeDto)
+        public async Task CreateAsync(EmployeeDto employeeDto)
         {
-            throw new NotImplementedException();
+            await _dbContext.Employees.AddAsync(employeeDto.MapToEmployeeEntity());
+            await _dbContext.SaveChangesAsync();
         }
 
         public Task KillAsync(int id)
