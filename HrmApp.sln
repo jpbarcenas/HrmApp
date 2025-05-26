@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HrmApp.Web", "HrmApp.Web\Hr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HrmApp.Core", "HrmApp.Core\HrmApp.Core.csproj", "{5D85C857-9D48-4FD1-A142-29FE07F20EBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HrmApp.Domain", "HrmApp.Domain\HrmApp.Domain.csproj", "{D20AD89B-5625-4A58-8633-E6F0987190CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5D85C857-9D48-4FD1-A142-29FE07F20EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D85C857-9D48-4FD1-A142-29FE07F20EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D85C857-9D48-4FD1-A142-29FE07F20EBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D20AD89B-5625-4A58-8633-E6F0987190CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D20AD89B-5625-4A58-8633-E6F0987190CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D20AD89B-5625-4A58-8633-E6F0987190CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D20AD89B-5625-4A58-8633-E6F0987190CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
