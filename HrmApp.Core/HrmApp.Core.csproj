@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HrmApp.Domain\HrmApp.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

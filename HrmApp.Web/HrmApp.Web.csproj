@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HrmApp.Core\HrmApp.Core.csproj" />
+    <ProjectReference Include="..\HrmApp.Domain\HrmApp.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
