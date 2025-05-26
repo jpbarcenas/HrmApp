@@ -1,6 +1,8 @@
 ﻿using HrmApp.Core.Interfaces;
 using HrmApp.Domain;
 using HrmApp.Domain.Dtos;
+using HrmApp.Domain.Mappings;
+using Microsoft.EntityFrameworkCore;
 
 namespace HrmApp.Core.Implementations
 {
@@ -13,9 +15,11 @@ namespace HrmApp.Core.Implementations
             _dbContext = dbContext;
         }
 
-        public Task<List<EmployeeDto>> FindAllAsync()
+        public async Task<IEnumerable<EmployeeDto>> FindAllAsync()
         {
-            throw new NotImplementedException();
+            var employees = await _dbContext.Employees.ToListAsync();
+
+            return employees.MapToEmployeeListDto();
         }
 
         public Task<EmployeeDto> FindByIdAsync(int id)

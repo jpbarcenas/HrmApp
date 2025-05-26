@@ -4,7 +4,7 @@ namespace HrmApp.Core.Interfaces
 {
     public interface IEmployeeRepository
     {
-        Task<List<EmployeeDto>> FindAllAsync();
+        Task<IEnumerable<EmployeeDto>> FindAllAsync();
         Task<EmployeeDto> FindByIdAsync(int id);
         Task UpdateAsync(EmployeeDto employeeDto);
         Task CreateAsync(EmployeeDto employeeDto);
