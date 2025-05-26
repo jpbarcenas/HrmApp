@@ -1,3 +1,4 @@
+using HrmApp.Core;
 using HrmApp.Domain;
 using HrmApp.Domain.Seeders;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<HrmAppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb")));
+
+builder.Services.AddApplicationRepositories();
 
 builder.Services.AddRazorPages();
 
