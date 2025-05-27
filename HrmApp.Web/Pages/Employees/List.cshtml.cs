@@ -36,40 +36,55 @@ namespace HrmApp.Web.Pages.Employees
 
         public async Task OnGetAsync()
         {
-            var (employees, totalCount) = await _employeeRepository.FindAllAsync(CurrentPage, PageSize, SortBy, SortDescending);
-
-            PagedEmployees = new PagedResult<EmployeeViewModel>
+            try
             {
-                Items = employees.MapToEmployeeListViewModel().ToList(),
-                TotalCount = totalCount,
-                PageNumber = CurrentPage,
-                PageSize = PageSize
-            };
 
-            //var employees = await _employeeRepository.FindAllAsync();
+                var (employees, totalCount) = await _employeeRepository.FindAllAsync(CurrentPage, PageSize, SortBy, SortDescending);
 
-            //Employees = employees.MapToEmployeeListViewModel();
+                PagedEmployees = new PagedResult<EmployeeViewModel>
+                {
+                    Items = employees.MapToEmployeeListViewModel().ToList(),
+                    TotalCount = totalCount,
+                    PageNumber = CurrentPage,
+                    PageSize = PageSize
+                };
+
+            }
+            catch (Exception ex)
+            {
+                RedirectToPage("/Error", new { ex.Message });
+            }
         }
 
         public IActionResult OnGetSort(string sortBy)
         {
-            if (SortBy == sortBy)
-            {
-                SortDescending = !SortDescending;
-            }
-            else
-            {
-                SortBy = sortBy;
-                SortDescending = false;
-            }
 
-            return RedirectToPage("./List", new
+            try
             {
-                currentPage = CurrentPage,
-                pageSize = PageSize,
-                sortBy = SortBy,
-                sortDescending = SortDescending
-            });
+
+                if (SortBy == sortBy)
+                {
+                    SortDescending = !SortDescending;
+                }
+                else
+                {
+                    SortBy = sortBy;
+                    SortDescending = false;
+                }
+
+                return RedirectToPage("./List", new
+                {
+                    currentPage = CurrentPage,
+                    pageSize = PageSize,
+                    sortBy = SortBy,
+                    sortDescending = SortDescending
+                });
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToPage("/Error", new { ex.Message });
+            }
         }
     }
 }

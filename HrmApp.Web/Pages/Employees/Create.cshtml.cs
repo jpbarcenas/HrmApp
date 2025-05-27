@@ -26,35 +26,43 @@ namespace HrmApp.Web.Pages.Employees
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Employee.Id != 0)
+            try
             {
-                ModelState.AddModelError($"Employee.Id", "Id must be empty");
-            }
-
-            var validationContext = new ValidationContext(Employee, null, null);
-            var validationResults = new List<ValidationResult>();
-
-            bool isValid = Validator.TryValidateObject(Employee, validationContext, validationResults, true);
-
-            if (!isValid)
-            {
-                foreach (var result in validationResults)
+                if (Employee.Id != 0)
                 {
-                    foreach (var member in result.MemberNames)
+                    ModelState.AddModelError($"Employee.Id", "Id must be empty");
+                }
+
+                var validationContext = new ValidationContext(Employee, null, null);
+                var validationResults = new List<ValidationResult>();
+
+                bool isValid = Validator.TryValidateObject(Employee, validationContext, validationResults, true);
+
+                if (!isValid)
+                {
+                    foreach (var result in validationResults)
                     {
-                        ModelState.AddModelError($"Employee.{member}", result.ErrorMessage);
+                        foreach (var member in result.MemberNames)
+                        {
+                            ModelState.AddModelError($"Employee.{member}", result.ErrorMessage);
+                        }
                     }
                 }
-            }
 
-            if (!ModelState.IsValid)
+                if (!ModelState.IsValid)
+                {
+                    return Page();
+                }
+
+                await _employeeRepository.CreateAsync(Employee.MapToEmployeeDto());
+
+                return RedirectToPage("./List");
+
+            }
+            catch (Exception ex)
             {
-                return Page();
+                return RedirectToPage("/Error", new { message = ex.Message, statusCode = 404, details = ex.InnerException });
             }
-
-            await _employeeRepository.CreateAsync(Employee.MapToEmployeeDto());
-
-            return RedirectToPage("./List");
         }
     }
 }

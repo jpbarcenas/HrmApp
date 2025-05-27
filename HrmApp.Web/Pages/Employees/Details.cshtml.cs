@@ -19,16 +19,24 @@ namespace HrmApp.Web.Pages.Employees
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var employee = await _employeeRepository.FindByIdAsync(id);
-            if (employee == null)
+            try
             {
-                return NotFound();
+                var employee = await _employeeRepository.FindByIdAsync(id);
+                if (employee == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    Employee = employee.MapToEmployeeViewModel();
+                }
+                return Page();
+
             }
-            else
+            catch (Exception ex)
             {
-                Employee = employee.MapToEmployeeViewModel();
+                return RedirectToPage("/Error", new { message = ex.Message, statusCode = 500, details = ex.InnerException });
             }
-            return Page();
         }
     }
 }

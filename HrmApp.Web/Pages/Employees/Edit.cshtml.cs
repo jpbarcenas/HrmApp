@@ -22,63 +22,64 @@ namespace HrmApp.Web.Pages.Employees
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var employee = await _employeeRepository.FindByIdAsync(id);
-
-            if (employee == null)
+            try
             {
-                return NotFound();
+                var employee = await _employeeRepository.FindByIdAsync(id);
+
+                Employee = employee.MapToAddOrUpdateEmployeeViewModel();
+
+                return Page();
             }
-
-            Employee = employee.MapToAddOrUpdateEmployeeViewModel();
-
-            return Page();
+            catch (Exception ex)
+            {
+                return RedirectToPage("/Error", new { message = ex.Message, statusCode = 500, details = ex.InnerException });
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Employee.Id == 0)
-            {
-                ModelState.AddModelError($"Employee.Id", "Id must not be empty");
-            }
-
-            var validationContext = new ValidationContext(Employee, null, null);
-            var validationResults = new List<ValidationResult>();
-
-            bool isValid = Validator.TryValidateObject(Employee, validationContext, validationResults, true);
-
-            if (!isValid)
-            {
-                foreach (var result in validationResults)
-                {
-                    foreach (var member in result.MemberNames)
-                    {
-                        ModelState.AddModelError($"Employee.{member}", result.ErrorMessage);
-                    }
-                }
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             try
             {
-                await _employeeRepository.UpdateAsync(Employee.MapToEmployeeDto());
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployeeExists(Employee.Id).Result)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return RedirectToPage("./List");
+
+                if (Employee.Id == 0)
+                {
+                    ModelState.AddModelError($"Employee.Id", "Id must not be empty");
+                }
+
+                var validationContext = new ValidationContext(Employee, null, null);
+                var validationResults = new List<ValidationResult>();
+
+                bool isValid = Validator.TryValidateObject(Employee, validationContext, validationResults, true);
+
+                if (!isValid)
+                {
+                    foreach (var result in validationResults)
+                    {
+                        foreach (var member in result.MemberNames)
+                        {
+                            ModelState.AddModelError($"Employee.{member}", result.ErrorMessage);
+                        }
+                    }
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return Page();
+                }
+
+                await _employeeRepository.UpdateAsync(Employee.MapToEmployeeDto());
+
+                return RedirectToPage("./List");
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return RedirectToPage("/Error", new { message = ex.Message, statusCode = 400, details = ex.InnerException });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToPage("/Error", new { message = ex.Message, statusCode = 500, details = ex.InnerException });
+            }
         }
 
         private async Task<bool> EmployeeExists(int id)

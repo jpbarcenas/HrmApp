@@ -21,25 +21,36 @@ namespace HrmApp.Web.Pages.Employees
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var employee = await _employeeRepository.FindByIdAsync(id);
+            try
+            {
 
-            if (employee == null)
-            {
-                return NotFound();
-            }
-            else
-            {
+                var employee = await _employeeRepository.FindByIdAsync(id);
+
                 Employee = employee.MapToEmployeeViewModel();
-            }
 
-            return Page();
+                return Page();
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToPage("/Error", new { message = ex.Message, statusCode = 404, details = ex.InnerException });
+            }
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            await _employeeRepository.KillAsync(id);
+            try
+            {
 
-            return RedirectToPage("./List");
+                await _employeeRepository.KillAsync(id);
+
+                return RedirectToPage("./List");
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToPage("/Error", new { message = ex.Message, statusCode = 500, details = ex.InnerException });
+            }
         }
     }
 }

@@ -10,7 +10,6 @@ namespace HrmApp.Web.Models
 
         [Required(ErrorMessage = "Name is mandatory")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 100 characters")]
-        [RegularExpression("^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,][0,9]{1,20}$", ErrorMessage = "Name contains invalid characters")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Email is mandatory")]
