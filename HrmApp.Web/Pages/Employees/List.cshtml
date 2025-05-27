@@ -8,33 +8,52 @@
 
 <hr />
 
-<table class="table">
+<!-- Page Size Selector -->
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            <label>Show</label>
+            <select class="form-control-sm" onchange="changePageSize(this)">
+                <option value="5" selected="@(Model.PagedEmployees.PageSize == 5)">5</option>
+                <option value="10" selected="@(Model.PagedEmployees.PageSize == 10)">10</option>
+                <option value="20" selected="@(Model.PagedEmployees.PageSize == 20)">20</option>
+                <option value="50" selected="@(Model.PagedEmployees.PageSize == 50)">50</option>
+            </select>
+            <label>records per page</label>
+        </div>
+    </div>
+    <div class="col">
+        Total Employees: @Model.PagedEmployees.TotalCount
+    </div>
+</div>
+
+
+<table class="table-responsive" width="100%">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Employees[0].Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Employees[0].Email)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Employees[0].Department)
+                Department
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Employees[0].StartDate)
+                Start Date
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Employees[0].IsActive)
+                Active
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Employees)
+        @foreach (var item in Model.PagedEmployees.Items)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    <a asp-page="./Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
@@ -48,12 +67,50 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.IsActive)
                 </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
             </tr>
         }
     </tbody>
 </table>
+
+<!-- Pagination Controls -->
+<nav aria-label="Employee pagination">
+    <ul class="pagination">
+        <li class="page-item @(!Model.PagedEmployees.HasPreviousPage ? "disabled" : "")">
+            <a class="page-link"
+               asp-page="./List"
+               asp-route-currentPage="@(Model.PagedEmployees.PageNumber - 1)"
+               asp-route-pageSize="@Model.PagedEmployees.PageSize">Previous</a>
+        </li>
+
+        @for (var i = 1; i <= Model.PagedEmployees.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.PagedEmployees.PageNumber ? "active" : "")">
+                <a class="page-link"
+                   asp-page="./List"
+                   asp-route-currentPage="@i"
+                   asp-route-pageSize="@Model.PagedEmployees.PageSize">@i</a>
+            </li>
+        }
+
+        <li class="page-item @(!Model.PagedEmployees.HasNextPage ? "disabled" : "")">
+            <a class="page-link"
+               asp-page="./List"
+               asp-route-currentPage="@(Model.PagedEmployees.PageNumber + 1)"
+               asp-route-pageSize="@Model.PagedEmployees.PageSize">Next</a>
+        </li>
+    </ul>
+</nav>
+
+
+
+@section Scripts {
+    <script>
+        function changePageSize(select) {
+            const pageSize = select.value;
+            const url = new URL(window.location.href);
+            url.searchParams.set('pageSize', pageSize);
+            url.searchParams.set('currentPage', 1); // Reset to first page
+            window.location.href = url.toString();
+        }
+    </script>
+}

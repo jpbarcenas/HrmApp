@@ -15,11 +15,18 @@ namespace HrmApp.Core.Implementations
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<EmployeeDto>> FindAllAsync()
+        public async Task<(IEnumerable<EmployeeDto> employees, int totalCount)> FindAllAsync(int pageNumber = 1, int pageSize = 10)
         {
-            var employees = await _dbContext.Employees.ToListAsync();
+            var query = _dbContext.Employees.AsQueryable();
 
-            return employees.MapToEmployeeListDto();
+            var totalCount = await query.CountAsync();
+
+            var employees = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (employees.MapToEmployeeListDto(), totalCount);
         }
 
         public async Task<EmployeeDto> FindByIdAsync(int id)
