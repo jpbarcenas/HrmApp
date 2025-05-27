@@ -52,14 +52,14 @@ namespace HrmApp.Core.Implementations
             }
         }
 
-        public Task<int> CountActiveEmployeesAsync()
+        public async Task<int> CountActiveEmployeesAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Employees.CountAsync(e => e.IsActive);
         }
 
-        public Task<int> CountInactiveEmployeesAsync()
+        public async Task<int> CountInactiveEmployeesAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Employees.CountAsync(e => !e.IsActive);
         }
 
     }
