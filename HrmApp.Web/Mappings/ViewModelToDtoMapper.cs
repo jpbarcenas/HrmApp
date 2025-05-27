@@ -17,5 +17,17 @@ namespace HrmApp.Web.Mappings
                 IsActive = employeeVm.IsActive,
             };
         }
+
+        public static EmployeeDto MapToEmployeeDto(this AddOrUpdateEmployeeViewModel employeeVm)
+        {
+            return new EmployeeDto
+            {
+                Name = employeeVm.Name,
+                Email = employeeVm.Email,
+                Department = employeeVm.Department,
+                StartDate = employeeVm.StartDate,
+                IsActive = employeeVm.IsActive,
+            };
+        }
     }
 }

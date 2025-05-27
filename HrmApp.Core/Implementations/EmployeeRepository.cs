@@ -29,9 +29,10 @@ namespace HrmApp.Core.Implementations
             return employee.MapToEmployeeDto();
         }
         
-        public Task UpdateAsync(EmployeeDto employeeDto)
+        public async Task UpdateAsync(EmployeeDto employeeDto)
         {
-            throw new NotImplementedException();
+            _dbContext.Employees.Update(employeeDto.MapToEmployeeEntity());
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task CreateAsync(EmployeeDto employeeDto)

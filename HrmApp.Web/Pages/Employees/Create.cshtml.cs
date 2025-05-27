@@ -17,7 +17,7 @@ namespace HrmApp.Web.Pages.Employees
         }
 
         [BindProperty]
-        public EmployeeViewModel Employee { get; set; } = default!;
+        public AddOrUpdateEmployeeViewModel Employee { get; set; } = default!;
 
         public IActionResult OnGet()
         {
@@ -26,6 +26,11 @@ namespace HrmApp.Web.Pages.Employees
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (Employee.Id != 0)
+            {
+                ModelState.AddModelError($"Employee.Id", "Id must be empty");
+            }
+
             var validationContext = new ValidationContext(Employee, null, null);
             var validationResults = new List<ValidationResult>();
 

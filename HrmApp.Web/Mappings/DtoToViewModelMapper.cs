@@ -18,6 +18,19 @@ namespace HrmApp.Web.Mappings
             };
         }
 
+        public static AddOrUpdateEmployeeViewModel MapToAddOrUpdateEmployeeViewModel(this EmployeeDto employeeDto)
+        {
+            return new AddOrUpdateEmployeeViewModel
+            {
+                Id = employeeDto.Id,
+                Name = employeeDto.Name,
+                Email = employeeDto.Email,
+                Department = employeeDto.Department,
+                StartDate = employeeDto.StartDate,
+                IsActive = employeeDto.IsActive,
+            };
+        }
+
         public static List<EmployeeViewModel> MapToEmployeeListViewModel(this IEnumerable<EmployeeDto> employeeListDto)
         {
             var employeeListViewModel = new List<EmployeeViewModel>();
