@@ -22,13 +22,15 @@ namespace HrmApp.Web.Pages.Employees
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-
             var employee = await _employeeRepository.FindByIdAsync(id);
+
             if (employee == null)
             {
                 return NotFound();
             }
+
             Employee = employee.MapToAddOrUpdateEmployeeViewModel();
+
             return Page();
         }
 

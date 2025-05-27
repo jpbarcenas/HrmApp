@@ -41,9 +41,15 @@ namespace HrmApp.Core.Implementations
             await _dbContext.SaveChangesAsync();
         }
 
-        public Task KillAsync(int id)
+        public async Task KillAsync(int id)
         {
-            throw new NotImplementedException();
+            var employee = await _dbContext.Employees.FindAsync(id);
+
+            if (employee != null)
+            {
+                _dbContext.Employees.Remove(employee);
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
         public Task<int> CountActiveEmployeesAsync()
