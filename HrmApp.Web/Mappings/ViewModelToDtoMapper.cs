@@ -22,6 +22,7 @@ namespace HrmApp.Web.Mappings
         {
             return new EmployeeDto
             {
+                Id = employeeVm.Id,
                 Name = employeeVm.Name,
                 Email = employeeVm.Email,
                 Department = employeeVm.Department,

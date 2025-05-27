@@ -78,7 +78,7 @@ namespace HrmApp.Web.Pages.Employees
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./List");
         }
 
         private async Task<bool> EmployeeExists(int id)
