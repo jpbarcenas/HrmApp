@@ -109,10 +109,11 @@ HrmApp/
    - Custom validation attributes for business rules
    - Client-side validation with jQuery Unobtrusive
 
-4. **Pagination Solution**:
+4. **Pagination & Sorting Solution**:
    - PagedResult Lists for efficient data paging
-   - URL-preserved filter state
    - Configurable page sizes
+   - Sorting parameters are preserved during pagination
+   - URL-preserved filter state
 
 ## Deployment Instructions
 
