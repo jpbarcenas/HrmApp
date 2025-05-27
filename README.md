@@ -171,6 +171,9 @@ HrmApp/
    dotnet ef database update --connection "AzureSQLConnectionString"
    ```
 
+5. **Azure Deployment Guide with GitHub Actions**
+    - You may find a full step by step guide here [Azure Deployment Guide with GitHub Actions](https://github.com/jpbarcenas/HrmApp/AzureDeployment.md)
+
 ## Environment Variables
 | Variable | Description | Example |
 |----------|-------------|---------|
