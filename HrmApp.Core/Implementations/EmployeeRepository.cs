@@ -15,9 +15,30 @@ namespace HrmApp.Core.Implementations
             _dbContext = dbContext;
         }
 
-        public async Task<(IEnumerable<EmployeeDto> employees, int totalCount)> FindAllAsync(int pageNumber = 1, int pageSize = 10)
+        public async Task<(IEnumerable<EmployeeDto> employees, int totalCount)> FindAllAsync(
+            int pageNumber = 1,
+            int pageSize = 10,
+            string sortBy = "Name",
+            bool sortDescending = false)
         {
             var query = _dbContext.Employees.AsQueryable();
+
+            query = sortBy switch
+            {
+                "Name" => sortDescending ?
+                    query.OrderByDescending(e => e.Name) :
+                    query.OrderBy(e => e.Name),
+                "Email" => sortDescending ?
+                    query.OrderByDescending(e => e.Email) :
+                    query.OrderBy(e => e.Email),
+                "Department" => sortDescending ?
+                    query.OrderByDescending(e => e.Department) :
+                    query.OrderBy(e => e.Department),
+                "StartDate" => sortDescending ?
+                    query.OrderByDescending(e => e.StartDate) :
+                    query.OrderBy(e => e.StartDate),
+                _ => query.OrderBy(e => e.Name)
+            };
 
             var totalCount = await query.CountAsync();
 

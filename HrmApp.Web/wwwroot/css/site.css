@@ -39,3 +39,20 @@ body {
     pointer-events: none;
     cursor: not-allowed;
 }
+
+th a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+th a:hover {
+    color: #0056b3;
+}
+
+.fa-sort, .fa-sort-up, .fa-sort-down {
+    margin-left: 5px;
+    font-size: 0.8em;
+}

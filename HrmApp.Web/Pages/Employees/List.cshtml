@@ -22,26 +22,86 @@
             <label>records per page</label>
         </div>
     </div>
-    <div class="col">
+    <div class="col text-end">
         Total Employees: @Model.PagedEmployees.TotalCount
     </div>
 </div>
 
 
-<table class="table-responsive" width="100%">
+<table class="table table-striped table-hover table-responsive" width="100%">
     <thead>
         <tr>
             <th>
-                Name
+                <a asp-page="./List"
+                   asp-route-sortBy="Name"
+                   asp-route-sortDescending="@(Model.SortBy == "Name" && !Model.SortDescending)"
+                   asp-route-currentPage="@Model.CurrentPage"
+                   asp-route-pageSize="@Model.PageSize">
+                    @if (Model.SortBy == "Name")
+                    {
+                        <i class="fas @(Model.SortDescending ? "fa-sort-down" : "fa-sort-up")"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-sort"></i>
+                    }
+                    &nbsp;
+                    Name
+                </a>
             </th>
             <th>
-                Email
+                <a asp-page="./List"
+                   asp-route-sortBy="Email"
+                   asp-route-sortDescending="@(Model.SortBy == "Email" && !Model.SortDescending)"
+                   asp-route-currentPage="@Model.CurrentPage"
+                   asp-route-pageSize="@Model.PageSize">
+                    @if (Model.SortBy == "Email")
+                    {
+                        <i class="fas @(Model.SortDescending ? "fa-sort-down" : "fa-sort-up")"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-sort"></i>
+                    }
+                    &nbsp;
+                    Email
+                </a>
             </th>
             <th>
-                Department
+                <a asp-page="./List"
+                   asp-route-sortBy="Department"
+                   asp-route-sortDescending="@(Model.SortBy == "Department" && !Model.SortDescending)"
+                   asp-route-currentPage="@Model.CurrentPage"
+                   asp-route-pageSize="@Model.PageSize">
+                    @if (Model.SortBy == "Department")
+                    {
+                        <i class="fas @(Model.SortDescending ? "fa-sort-down" : "fa-sort-up")"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-sort"></i>
+                    }
+                    &nbsp;
+                    Department
+                </a>
             </th>
             <th>
-                Start Date
+                <a asp-page="./List"
+                   asp-route-sortBy="StartDate"
+                   asp-route-sortDescending="@(Model.SortBy == "StartDate" && !Model.SortDescending)"
+                   asp-route-currentPage="@Model.CurrentPage"
+                   asp-route-pageSize="@Model.PageSize">
+                    @if (Model.SortBy == "StartDate")
+                    {
+                        <i class="fas @(Model.SortDescending ? "fa-sort-down" : "fa-sort-up")"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-sort"></i>
+                    }
+                    &nbsp;
+                    Start Date
+                </a>
             </th>
             <th>
                 Active

@@ -4,7 +4,11 @@ namespace HrmApp.Core.Interfaces
 {
     public interface IEmployeeRepository
     {
-        Task<(IEnumerable<EmployeeDto> employees, int totalCount)> FindAllAsync(int pageNumber = 1, int pageSize = 10);
+        Task<(IEnumerable<EmployeeDto> employees, int totalCount)> FindAllAsync(
+            int pageNumber = 1,
+            int pageSize = 10,
+            string sortBy = "Name",
+            bool sortDescending = false);
         Task<EmployeeDto> FindByIdAsync(int id);
         Task UpdateAsync(EmployeeDto employeeDto);
         Task CreateAsync(EmployeeDto employeeDto);

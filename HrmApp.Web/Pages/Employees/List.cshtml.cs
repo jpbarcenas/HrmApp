@@ -25,12 +25,18 @@ namespace HrmApp.Web.Pages.Employees
 
         [BindProperty(SupportsGet = true)]
         public int PageSize { get; set; } = DefaultPageSize;
+        
+        [BindProperty(SupportsGet = true)]
+        public string SortBy { get; set; } = "Name";
+
+        [BindProperty(SupportsGet = true)]
+        public bool SortDescending { get; set; }
 
         //public List<EmployeeViewModel> Employees { get; set; }
 
         public async Task OnGetAsync()
         {
-            var (employees, totalCount) = await _employeeRepository.FindAllAsync(CurrentPage, PageSize);
+            var (employees, totalCount) = await _employeeRepository.FindAllAsync(CurrentPage, PageSize, SortBy, SortDescending);
 
             PagedEmployees = new PagedResult<EmployeeViewModel>
             {
@@ -43,6 +49,27 @@ namespace HrmApp.Web.Pages.Employees
             //var employees = await _employeeRepository.FindAllAsync();
 
             //Employees = employees.MapToEmployeeListViewModel();
+        }
+
+        public IActionResult OnGetSort(string sortBy)
+        {
+            if (SortBy == sortBy)
+            {
+                SortDescending = !SortDescending;
+            }
+            else
+            {
+                SortBy = sortBy;
+                SortDescending = false;
+            }
+
+            return RedirectToPage("./List", new
+            {
+                currentPage = CurrentPage,
+                pageSize = PageSize,
+                sortBy = SortBy,
+                sortDescending = SortDescending
+            });
         }
     }
 }
