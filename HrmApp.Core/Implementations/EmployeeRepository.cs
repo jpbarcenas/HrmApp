@@ -22,9 +22,11 @@ namespace HrmApp.Core.Implementations
             return employees.MapToEmployeeListDto();
         }
 
-        public Task<EmployeeDto> FindByIdAsync(int id)
+        public async Task<EmployeeDto> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var employee = await _dbContext.Employees.FindAsync(id);
+
+            return employee.MapToEmployeeDto();
         }
         
         public Task UpdateAsync(EmployeeDto employeeDto)
